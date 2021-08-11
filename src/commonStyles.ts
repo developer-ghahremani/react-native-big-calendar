@@ -86,6 +86,9 @@ export const u = StyleSheet.create({
   'mt-6': {
     marginTop: 6,
   },
+  'mb-4': {
+    marginBottom: 4,
+  },
   'mb-6': {
     marginBottom: 6,
   },
@@ -107,6 +110,9 @@ export const u = StyleSheet.create({
   },
   'px-6': {
     paddingHorizontal: 6,
+  },
+  'pb-2': {
+    paddingBottom: 2,
   },
   'pb-6': {
     paddingBottom: 6,
@@ -145,6 +151,9 @@ export const u = StyleSheet.create({
   /*
    * Width
    */
+  'w-20': {
+    width: 20,
+  },
   'w-36': {
     width: 36,
   },
@@ -153,6 +162,9 @@ export const u = StyleSheet.create({
   },
   'h-36': {
     height: 36,
+  },
+  'h-50': {
+    height: 50,
   },
 
   /*
