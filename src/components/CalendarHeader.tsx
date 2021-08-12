@@ -33,21 +33,24 @@ function _CalendarHeader<T>({
 
   const borderColor = { borderColor: theme.palette.gray['200'] }
   const primaryBg = { backgroundColor: theme.palette.primary.main }
-  const centered = { alignItems: 'center', justifyContent: 'space-between' }
+  const centered = { alignItems: 'center', justifyContent: 'space-around' }
 
   return (
     <View
       style={[
         u['border-b-2'],
+        u['pt-2'],
         borderColor,
         theme.isRTL ? u['flex-row-reverse'] : u['flex-row'],
         style,
       ]}
     >
       <View style={[u['w-50'], centered]}>
-        <Text>Week</Text>
-        <Text>4</Text>
-        <Text>All day</Text>
+        <Text style={[theme.typography.xs]}>Week</Text>
+        <View style={[u['w-36'], u['h-36'], u['bordered'], u['justify-center'], u['items-center']]}>
+          <Text style={[theme.typography.xl]}>4</Text>
+        </View>
+        <Text style={[theme.typography.xs]}>All day</Text>
       </View>
       {dateRange.map((date, index) => {
         const _isToday = isToday(date)
@@ -63,7 +66,7 @@ function _CalendarHeader<T>({
                 style={[
                   theme.typography.xs,
                   u['text-center'],
-                  u['mb-6'],
+                  u['mb-2'],
                   { color: _isToday ? theme.palette.primary.main : theme.palette.gray['500'] },
                 ]}
               >
@@ -74,8 +77,8 @@ function _CalendarHeader<T>({
                   !_isToday
                     ? [
                         primaryBg,
-                        u['h-50'],
-                        u['w-50'],
+                        u['h-36'],
+                        u['w-36'],
                         u['pb-2'],
                         u['pt-2'],
                         u['rounded-full'],
@@ -85,7 +88,20 @@ function _CalendarHeader<T>({
                         u['z-20'],
                         { backgroundColor: '#' + index.toString().repeat(6) },
                       ]
-                    : [u['mb-4'], u['mt-6']]
+                    : [
+                        primaryBg,
+                        u['h-36'],
+                        u['w-36'],
+                        u['pb-2'],
+                        u['pt-2'],
+                        u['rounded-full'],
+                        u['items-center'],
+                        u['justify-center'],
+                        u['self-center'],
+                        u['z-20'],
+                        u['border-red'],
+                        { backgroundColor: '#0' },
+                      ]
                 }
               >
                 <Text
@@ -95,9 +111,9 @@ function _CalendarHeader<T>({
                         ? theme.palette.primary.contrastText
                         : theme.palette.gray['800'],
                     },
-                    theme.typography.xl,
+                    theme.typography.sm,
                     u['text-center'],
-                    Platform.OS === 'web' && _isToday && u['mt-6'],
+                    //Platform.OS === 'web' && _isToday && u['mt-6'],
                   ]}
                 >
                   {date.format('D')}
@@ -109,9 +125,9 @@ function _CalendarHeader<T>({
                         ? theme.palette.primary.contrastText
                         : theme.palette.gray['800'],
                     },
-                    theme.typography.sm,
+                    theme.typography.xs,
                     u['text-center'],
-                    Platform.OS === 'web' && _isToday && u['mt-6'],
+                    //Platform.OS === 'web' && _isToday && u['mt-6'],
                   ]}
                 >
                   {transformToPersianNumbers(date.format('D'))}
@@ -119,11 +135,7 @@ function _CalendarHeader<T>({
               </View>
             </View>
             <View
-              style={[
-                u['border-l'],
-                { borderColor: theme.palette.gray['200'] },
-                { height: cellHeight },
-              ]}
+              style={[u['border-l'], { borderColor: theme.palette.gray['200'] }, { height: 18 }]}
             >
               {allDayEvents.map((event) => {
                 if (!dayjs(event.start).isSame(date, 'day')) {

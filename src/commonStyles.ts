@@ -73,6 +73,14 @@ export const u = StyleSheet.create({
   'border-r': {
     borderRightWidth: 1,
   },
+  bordered: {
+    borderWidth: 2.5,
+    borderRadius: 7,
+  },
+  'border-red': {
+    borderWidth: 2.5,
+    borderColor: 'red',
+  },
 
   /*
    * Spacing
@@ -104,6 +112,9 @@ export const u = StyleSheet.create({
   },
   'pt-2': {
     paddingTop: 2,
+  },
+  'pt-7': {
+    paddingTop: 7,
   },
   'py-2': {
     paddingVertical: 2,
