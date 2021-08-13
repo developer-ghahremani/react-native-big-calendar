@@ -20,7 +20,9 @@ const _HourGuideColumn = ({ cellHeight, hour, ampm }: HourGuideColumnProps) => {
 
   return (
     <View style={{ height: cellHeight }}>
-      <Text style={[textStyle, u['text-center']]}>{formatHour(hour, ampm)}</Text>
+      {hour != 0 && (
+        <Text style={[textStyle, u['text-center'], u['mt--6']]}>{formatHour(hour, ampm)}</Text>
+      )}
     </View>
   )
 }

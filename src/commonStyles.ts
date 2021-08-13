@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from 'react-native'
 
-export const MIN_HEIGHT = 1200
+export const MIN_HEIGHT = 1000
 export const HOUR_GUIDE_WIDTH = 50
 export const OVERLAP_OFFSET = Platform.OS === 'web' ? 20 : 8
 export const OVERLAP_PADDING = Platform.OS === 'web' ? 3 : 0
@@ -93,6 +93,9 @@ export const u = StyleSheet.create({
   },
   'mt-6': {
     marginTop: 6,
+  },
+  'mt--6': {
+    marginTop: -6,
   },
   'mb-4': {
     marginBottom: 4,
