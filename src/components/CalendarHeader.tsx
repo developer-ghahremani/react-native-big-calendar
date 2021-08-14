@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import * as React from 'react'
-import { Platform, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 
 import { eventCellCss, u } from '../commonStyles'
 import { ICalendarEvent } from '../interfaces'
@@ -33,7 +33,6 @@ function _CalendarHeader<T>({
 
   const borderColor = { borderColor: theme.palette.gray['200'] }
   const primaryBg = { backgroundColor: theme.palette.primary.main }
-  const centered = { alignItems: 'center', justifyContent: 'space-around' }
 
   return (
     <View
@@ -45,7 +44,7 @@ function _CalendarHeader<T>({
         style,
       ]}
     >
-      <View style={[u['w-50'], centered]}>
+      <View style={[u['w-50'], u['items-center'], u['justify-center']]}>
         <Text style={[theme.typography.xs]}>Week</Text>
         <View style={[u['w-36'], u['h-36'], u['bordered'], u['justify-center'], u['items-center']]}>
           <Text style={[theme.typography.xl]}>4</Text>
@@ -66,7 +65,7 @@ function _CalendarHeader<T>({
                 style={[
                   theme.typography.xs,
                   u['text-center'],
-                  u['mb-2'],
+                  u['mb-4'],
                   { color: _isToday ? theme.palette.primary.main : theme.palette.gray['500'] },
                 ]}
               >
