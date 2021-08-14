@@ -28,13 +28,12 @@ It's a hard task to debug three platforms. I usually develop with the Web versio
 # Install
 
 ```
-npm install --save react-native-big-calendar@2.0.0-rc
-```
+npm install --save react-native-draggable-big-calendar
 
 Or if you use Yarn:
 
 ```
-yarn add react-native-big-calendar@2.0.0-rc
+yarn add react-native-draggable-big-calendar
 ```
 
 ### Other dependencies
