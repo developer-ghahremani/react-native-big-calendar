@@ -45,6 +45,12 @@ export const u = StyleSheet.create({
   'justify-between': {
     justifyContent: 'space-between',
   },
+  'justify-around': {
+    justifyContent: 'space-around',
+  },
+  'justify-evenly': {
+    justifyContent: 'space-around',
+  },
   'justify-center': {
     justifyContent: 'center',
   },
@@ -102,6 +108,9 @@ export const u = StyleSheet.create({
   },
   'mb-6': {
     marginBottom: 6,
+  },
+  'mb-12': {
+    marginBottom: 12,
   },
   'mx-3': {
     marginLeft: 3,

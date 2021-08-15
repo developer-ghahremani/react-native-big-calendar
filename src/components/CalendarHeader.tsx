@@ -44,18 +44,18 @@ function _CalendarHeader<T>({
         style,
       ]}
     >
-      <View style={[u['w-50'], u['items-center'], u['justify-center']]}>
-        <Text style={[theme.typography.xs]}>Week</Text>
+      <View style={[u['w-50'], u['items-center']]}>
+        <Text style={[theme.typography.xs, u['mb-4']]}>Week</Text>
         <View style={[u['w-36'], u['h-36'], u['bordered'], u['justify-center'], u['items-center']]}>
           <Text style={[theme.typography.xl]}>4</Text>
         </View>
-        <Text style={[theme.typography.xs]}>All day</Text>
+        <Text style={[theme.typography.xs, u['mt-6']]}>All day</Text>
       </View>
       {dateRange.map((date, index) => {
         const _isToday = isToday(date)
         return (
           <TouchableOpacity
-            style={[u['flex-1'], u['pt-2']]}
+            style={[u['flex-1'], u['pt-2'], u['mb-6']]}
             onPress={() => _onPress(date.toDate())}
             disabled={onPressDateHeader === undefined}
             key={date.toString()}
@@ -130,9 +130,7 @@ function _CalendarHeader<T>({
                 </Text>
               </View>
             </View>
-            <View
-              style={[u['border-l'], { borderColor: theme.palette.gray['200'] }, { height: 18 }]}
-            >
+            <View style={[{ borderColor: theme.palette.gray['200'] }, { height: 28 }]}>
               {allDayEvents.map((event) => {
                 if (!dayjs(event.start).isSame(date, 'day')) {
                   return null
