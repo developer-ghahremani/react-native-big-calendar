@@ -52,6 +52,7 @@ export interface CalendarContainerProps<T> {
   calendarContainerStyle?: ViewStyle
   headerContainerStyle?: ViewStyle
   bodyContainerStyle?: ViewStyle
+  headerDayNumberContainerStyle?: ViewStyle
 
   // Custom renderer
   renderEvent?: EventRenderer<T>
@@ -92,6 +93,7 @@ function _CalendarContainer<T>({
   showTime = true,
   headerContainerStyle = {},
   bodyContainerStyle = {},
+  headerDayNumberContainerStyle = {},
   swipeEnabled = true,
   weekStartsOn = 0,
   onChangeDate,
@@ -204,6 +206,7 @@ function _CalendarContainer<T>({
     style: headerContainerStyle,
     allDayEvents: allDayEvents,
     onPressDateHeader: onPressDateHeader,
+    DayNumberContainerStyle: headerDayNumberContainerStyle,
   }
 
   return (

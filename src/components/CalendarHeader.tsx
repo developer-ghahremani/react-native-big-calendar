@@ -12,6 +12,7 @@ export interface CalendarHeaderProps<T> {
   cellHeight: number
   style: ViewStyle
   allDayEvents: ICalendarEvent<T>[]
+  DayNumberContainerStyle: ViewStyle
   onPressDateHeader?: (date: Date) => void
 }
 
@@ -21,6 +22,7 @@ function _CalendarHeader<T>({
   style,
   allDayEvents,
   onPressDateHeader,
+  DayNumberContainerStyle,
 }: CalendarHeaderProps<T>) {
   const _onPress = React.useCallback(
     (date: Date) => {
@@ -83,7 +85,7 @@ function _CalendarHeader<T>({
                         u['justify-center'],
                         u['self-center'],
                         u['z-20'],
-                        { backgroundColor: '#' + index.toString().repeat(6) },
+                        DayNumberContainerStyle,
                       ]
                     : [
                         primaryBg,

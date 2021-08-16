@@ -53,6 +53,7 @@ storiesOf('showcase - Desktop', module)
           events={state.events}
           onPressEvent={(event) => alert(event.title)}
           onPressCell={state.addEvent}
+          headerDayNumberContainerStyle={{ backgroundColor: 'green' }}
         />
       </View>
     )
