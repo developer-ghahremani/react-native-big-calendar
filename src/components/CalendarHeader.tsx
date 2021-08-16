@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import moment from 'jalali-moment'
 import * as React from 'react'
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 
@@ -53,16 +54,16 @@ function _CalendarHeader<T>({
         </View>
         <Text style={[theme.typography.xs, u['mt-6']]}>All day</Text>
       </View>
-      {dateRange.map((date, index) => {
+      {dateRange.map((date) => {
         const _isToday = isToday(date)
         return (
           <TouchableOpacity
-            style={[u['flex-1'], u['pt-2'], u['mb-6']]}
+            style={[u['flex-1'], u['pt-2'], u['mb-2']]}
             onPress={() => _onPress(date.toDate())}
             disabled={onPressDateHeader === undefined}
             key={date.toString()}
           >
-            <View style={[u['justify-between'], { height: cellHeight }]}>
+            <View style={[u['justify-between'], { minHeight: cellHeight }]}>
               <Text
                 style={[
                   theme.typography.xs,
@@ -97,8 +98,11 @@ function _CalendarHeader<T>({
                         u['justify-center'],
                         u['self-center'],
                         u['z-20'],
-                        u['border-red'],
-                        { backgroundColor: '#0' },
+                        {
+                          backgroundColor: '#0',
+                          borderWidth: 2.5,
+                          borderColor: DayNumberContainerStyle.backgroundColor,
+                        },
                       ]
                 }
               >
@@ -128,11 +132,15 @@ function _CalendarHeader<T>({
                     //Platform.OS === 'web' && _isToday && u['mt-6'],
                   ]}
                 >
-                  {transformToPersianNumbers(date.format('D'))}
+                  {transformToPersianNumbers(
+                    moment(date.format('YYYY-M-D'), 'YYYY-M-D HH:mm:ss').locale('fa').format('D'),
+                  )}
                 </Text>
               </View>
             </View>
-            <View style={[{ borderColor: theme.palette.gray['200'] }, { height: 28 }]}>
+            {console.log('here')}
+            {console.log(allDayEvents)}
+            <View style={[{ borderColor: theme.palette.gray['200'] }, u['mt-2'], { height: 20 }]}>
               {allDayEvents.map((event) => {
                 if (!dayjs(event.start).isSame(date, 'day')) {
                   return null
