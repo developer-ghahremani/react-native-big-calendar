@@ -48,6 +48,5 @@
     "**/vendor/**",
     ".git",
     "**/__mocks__/*",
-    "./src/components/**"
   ]
 }

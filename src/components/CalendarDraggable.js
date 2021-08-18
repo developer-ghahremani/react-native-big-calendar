@@ -1,10 +1,7 @@
 import React, { useRef } from 'react'
 import { Animated, PanResponder, StyleSheet } from 'react-native'
 
-export const Draggable = (props: any) => {
-  interface pan {
-    x: Animated.Value
-  }
+export const Draggable = (props) => {
   const pan = useRef(new Animated.ValueXY()).current
 
   const panResponder = useRef(
