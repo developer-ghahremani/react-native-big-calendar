@@ -4,7 +4,7 @@ import React from 'react'
 import { Alert, Dimensions, View } from 'react-native'
 
 import { Calendar } from '../src'
-import Draggable from '../src/components/CalendarDraggable'
+import { Draggable } from '../src/components/CalendarDraggable'
 import { CONTROL_HEIGHT, Control } from './components/Control'
 import { customEventRenderer, events } from './events'
 import { useEvents } from './hooks'

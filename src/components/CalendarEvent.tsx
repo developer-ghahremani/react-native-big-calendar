@@ -55,7 +55,7 @@ function _CalendarEvent<T>({
     onPressEvent,
     injectedStyles: [
       getEventCellPositionStyle(event.start, event.end),
-      getStyleForOverlappingEvent(eventOrder, overlapOffset, palettes, event.start),
+      getStyleForOverlappingEvent(eventOrder, overlapOffset, palettes),
       u['absolute'],
       u['mt-2'],
       u['mx-3'],
