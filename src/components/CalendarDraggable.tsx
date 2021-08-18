@@ -2,13 +2,17 @@ import React, { useRef } from 'react'
 import { Animated, PanResponder, StyleSheet } from 'react-native'
 
 export const Draggable = (props: any) => {
+  interface pan {
+    x: Animated.Value
+  }
   const pan = useRef(new Animated.ValueXY()).current
 
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: () => {
-        console.log('huh')
+        console.log(pan.x)
+        console.log(pan.getLayout())
         pan.setOffset({
           x: pan.x._value,
           y: pan.y._value,
