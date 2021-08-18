@@ -16,7 +16,6 @@ export const eventCellCss = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1,
     elevation: 2,
-    minWidth: '33%',
   },
 })
 

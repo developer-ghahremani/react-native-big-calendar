@@ -4,6 +4,7 @@ import React from 'react'
 import { Alert, Dimensions, View } from 'react-native'
 
 import { Calendar } from '../src'
+import Draggable from '../src/components/CalendarDraggable'
 import { CONTROL_HEIGHT, Control } from './components/Control'
 import { customEventRenderer, events } from './events'
 import { useEvents } from './hooks'
@@ -54,6 +55,9 @@ storiesOf('showcase - Desktop', module)
           onPressEvent={(event) => alert(event.title)}
           onPressCell={state.addEvent}
           headerDayNumberContainerStyle={{ backgroundColor: 'green' }}
+          moveCallBack={(event) =>
+            alert('you moved this event/task to x: ' + event.moveX + ' and y: ' + event.moveY)
+          }
         />
       </View>
     )
@@ -301,6 +305,15 @@ storiesOf('showcase - Desktop', module)
           renderHeaderForMonthView={() => null}
           mode="month"
         />
+      </View>
+    )
+  })
+  .add('draggable', () => {
+    return (
+      <View style={[styles.desktop]}>
+        <Draggable />
+        <Draggable />
+        <Draggable />
       </View>
     )
   })

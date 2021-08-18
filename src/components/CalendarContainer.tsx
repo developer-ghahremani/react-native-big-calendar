@@ -75,6 +75,7 @@ export interface CalendarContainerProps<T> {
   onPressEvent?: (event: ICalendarEvent<T>) => void
   weekEndsOn?: WeekNum
   maxVisibleEventCount?: number
+  moveCallBack: any
 }
 
 dayjs.extend(isBetween)
@@ -105,6 +106,7 @@ function _CalendarContainer<T>({
   renderHeaderForMonthView: HeaderComponentForMonthView = CalendarHeaderForMonthView,
   weekEndsOn = 6,
   maxVisibleEventCount = 3,
+  moveCallBack = () => console.log('moveCallBack'),
 }: CalendarContainerProps<T>) {
   const [targetDate, setTargetDate] = React.useState(dayjs(date))
 
@@ -227,6 +229,7 @@ function _CalendarContainer<T>({
         onPressEvent={onPressEvent}
         onSwipeHorizontal={onSwipeHorizontal}
         renderEvent={renderEvent}
+        moveCallBack={moveCallBack}
       />
     </React.Fragment>
   )

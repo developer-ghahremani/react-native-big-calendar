@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import React from 'react'
+import { Dimensions } from 'react-native'
 
 import { OVERLAP_PADDING } from './commonStyles'
 import { ICalendarEvent, Mode, WeekNum } from './interfaces'
@@ -157,6 +158,7 @@ export function getStyleForOverlappingEvent(
   eventPosition: number,
   overlapOffset: number,
   palettes: Palette[],
+  startDate: Date,
 ) {
   let overlapStyle = {}
   const offset = overlapOffset
@@ -164,7 +166,7 @@ export function getStyleForOverlappingEvent(
   const zIndex = 100 + eventPosition
   const bgColors = palettes.map((p) => p.main)
   overlapStyle = {
-    start: start + OVERLAP_PADDING,
+    start: start + OVERLAP_PADDING + 50,
     end: OVERLAP_PADDING,
     backgroundColor: bgColors[eventPosition % bgColors.length] || bgColors[0],
     zIndex,

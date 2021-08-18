@@ -27,6 +27,7 @@ interface CalendarEventProps<T> {
   overlapOffset?: number
   renderEvent?: EventRenderer<T>
   ampm: boolean
+  moveCallBack: any
 }
 
 function _CalendarEvent<T>({
@@ -39,6 +40,7 @@ function _CalendarEvent<T>({
   overlapOffset = OVERLAP_OFFSET,
   renderEvent,
   ampm,
+  moveCallBack,
 }: CalendarEventProps<T>) {
   const theme = useTheme()
 
@@ -53,7 +55,7 @@ function _CalendarEvent<T>({
     onPressEvent,
     injectedStyles: [
       getEventCellPositionStyle(event.start, event.end),
-      getStyleForOverlappingEvent(eventOrder, overlapOffset, palettes),
+      getStyleForOverlappingEvent(eventOrder, overlapOffset, palettes, event.start),
       u['absolute'],
       u['mt-2'],
       u['mx-3'],
@@ -76,6 +78,7 @@ function _CalendarEvent<T>({
       ampm={ampm}
       touchableOpacityProps={touchableOpacityProps}
       textColor={textColor}
+      moveCallBack={moveCallBack}
     />
   )
 }

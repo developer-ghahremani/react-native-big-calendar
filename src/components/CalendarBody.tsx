@@ -44,6 +44,7 @@ interface CalendarBodyProps<T> {
   onPressEvent?: (event: ICalendarEvent<T>) => void
   onSwipeHorizontal?: (d: HorizontalDirection) => void
   renderEvent?: EventRenderer<T>
+  moveCallBack: any
 }
 
 function _CalendarBody<T>({
@@ -62,6 +63,7 @@ function _CalendarBody<T>({
   hideNowIndicator,
   overlapOffset,
   renderEvent,
+  moveCallBack,
 }: CalendarBodyProps<T>) {
   const scrollView = React.useRef<ScrollView>(null)
   const { now } = useNow(!hideNowIndicator)
@@ -107,6 +109,7 @@ function _CalendarBody<T>({
       overlapOffset={overlapOffset}
       renderEvent={renderEvent}
       ampm={ampm}
+      moveCallBack={moveCallBack}
     />
   )
 
@@ -127,9 +130,42 @@ function _CalendarBody<T>({
       nestedScrollEnabled
       contentOffset={Platform.OS === 'ios' ? { x: 0, y: scrollOffsetMinutes } : { x: 0, y: 0 }}
     >
+      {dateRange.map((date) =>
+        events
+          .filter(({ start }) =>
+            dayjs(start).isBetween(date.startOf('day'), date.endOf('day'), null, '[)'),
+          )
+          .map(_renderMappedEvent),
+      )}
+      {dateRange.map((date) =>
+        events
+          .filter(
+            ({ start, end }) =>
+              dayjs(start).isBefore(date.startOf('day')) &&
+              dayjs(end).isBetween(date.startOf('day'), date.endOf('day'), null, '[)'),
+          )
+          .map((event) => ({
+            ...event,
+            start: dayjs(event.end).startOf('day'),
+          }))
+          .map(_renderMappedEvent),
+      )}
+      {dateRange.map((date) =>
+        events
+          .filter(
+            ({ start, end }) =>
+              dayjs(start).isBefore(date.startOf('day')) && dayjs(end).isAfter(date.endOf('day')),
+          )
+          .map((event) => ({
+            ...event,
+            start: dayjs(event.end).startOf('day'),
+            end: dayjs(event.end).endOf('day'),
+          }))
+          .map(_renderMappedEvent),
+      )}
       <View
         style={[u['flex-1'], theme.isRTL ? u['flex-row-reverse'] : u['flex-row']]}
-        {...(Platform.OS === 'web' ? panResponder.panHandlers : {})}
+        // {...(Platform.OS === 'web' ? panResponder.panHandlers : {})}
       >
         <View style={[u['z-20'], u['w-50']]}>
           {hours.map((hour) => (
@@ -151,16 +187,16 @@ function _CalendarBody<T>({
             {/* Render events of this date */}
             {/* M  T  (W)  T  F  S  S */}
             {/*       S-E             */}
-            {events
+            {/* {events
               .filter(({ start }) =>
                 dayjs(start).isBetween(date.startOf('day'), date.endOf('day'), null, '[)'),
               )
-              .map(_renderMappedEvent)}
+              .map(_renderMappedEvent)} */}
 
             {/* Render events which starts before this date and ends on this date */}
             {/* M  T  (W)  T  F  S  S */}
             {/* S------E              */}
-            {events
+            {/* {events
               .filter(
                 ({ start, end }) =>
                   dayjs(start).isBefore(date.startOf('day')) &&
@@ -170,12 +206,12 @@ function _CalendarBody<T>({
                 ...event,
                 start: dayjs(event.end).startOf('day'),
               }))
-              .map(_renderMappedEvent)}
+              .map(_renderMappedEvent)} */}
 
             {/* Render events which starts before this date and ends after this date */}
             {/* M  T  (W)  T  F  S  S */}
             {/*    S-------E          */}
-            {events
+            {/* {events
               .filter(
                 ({ start, end }) =>
                   dayjs(start).isBefore(date.startOf('day')) &&
@@ -186,7 +222,7 @@ function _CalendarBody<T>({
                 start: dayjs(event.end).startOf('day'),
                 end: dayjs(event.end).endOf('day'),
               }))
-              .map(_renderMappedEvent)}
+              .map(_renderMappedEvent)} */}
 
             {isToday(date) && !hideNowIndicator && (
               <View

@@ -138,9 +138,9 @@ function _CalendarHeader<T>({
                 </Text>
               </View>
             </View>
-            {console.log('here')}
-            {console.log(allDayEvents)}
-            <View style={[{ borderColor: theme.palette.gray['200'] }, u['mt-2'], { height: 20 }]}>
+            <View
+              style={[{ borderColor: theme.palette.gray['200'] }, u['mt-2'], { minHeight: 20 }]}
+            >
               {allDayEvents.map((event) => {
                 if (!dayjs(event.start).isSame(date, 'day')) {
                   return null
@@ -152,7 +152,7 @@ function _CalendarHeader<T>({
                   >
                     <Text
                       style={{
-                        fontSize: theme.typography.sm.fontSize,
+                        fontSize: 8,
                         color: theme.palette.primary.contrastText,
                       }}
                     >
