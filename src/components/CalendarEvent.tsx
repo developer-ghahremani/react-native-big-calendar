@@ -14,6 +14,7 @@ const getEventCellPositionStyle = (start: Date, end: Date) => {
   return {
     height: `${relativeHeight}%`,
     top: `${relativeTop}%`,
+    marginLeft: `20%`,
   }
 }
 

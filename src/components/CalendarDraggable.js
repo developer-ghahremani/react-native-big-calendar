@@ -8,8 +8,6 @@ export const Draggable = (props) => {
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: () => {
-        console.log(pan.x)
-        console.log(pan.getLayout())
         pan.setOffset({
           x: pan.x._value,
           y: pan.y._value,
@@ -20,18 +18,16 @@ export const Draggable = (props) => {
       }),
       onPanResponderRelease: (e, gestureState) => {
         pan.flattenOffset()
-        console.log(e)
         props.moveCallBack(gestureState)
       },
     }),
   ).current
 
   const day = props.touchableOpacityProps.key.substring(0, 2)
-  const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'fr', 'So']
+  const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
   const dayDif = days.indexOf(day)
   const marginLeft = dayDif * 14.28
   const minusLeft = dayDif * 7.14
-  console.log(dayDif)
 
   return (
     <Animated.View

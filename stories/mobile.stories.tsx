@@ -42,7 +42,11 @@ storiesOf('showcase - Mobile', module)
   ))
   .add('week mode', () => (
     <View style={styles.mobile}>
-      <Calendar height={MOBILE_HEIGHT} events={events} />
+      <Calendar
+        height={MOBILE_HEIGHT}
+        events={events}
+        moveCallBack={(event) => console.log(event)}
+      />
     </View>
   ))
   .add('Month mode', () => {

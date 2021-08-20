@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import * as React from 'react'
 import { Platform, ScrollView, StyleSheet, View, ViewStyle } from 'react-native'
 
@@ -67,6 +67,8 @@ function _CalendarBody<T>({
 }: CalendarBodyProps<T>) {
   const scrollView = React.useRef<ScrollView>(null)
   const { now } = useNow(!hideNowIndicator)
+  const layoutProps = React.useRef({})
+  var daysWidth = 0
 
   React.useEffect(() => {
     if (scrollView.current && scrollOffsetMinutes && Platform.OS !== 'ios') {
@@ -97,6 +99,17 @@ function _CalendarBody<T>({
     [onPressCell],
   )
 
+  const whichDay = (event) => {
+    let dayMove: number = (event.moveX - event.x0) / daysWidth
+    let hourMove: number = (event.moveY - event.y0) / 41.66
+    console.log('you moved ' + dayMove + ' day and ' + hourMove + ' hours')
+    return moveCallBack({ dayMove: dayMove, hourMove: hourMove })
+  }
+
+  const setViewOffset = (x: number, y: number, width: number, height: number) => {
+    layoutProps.current = { x, y, width, height }
+  }
+
   const _renderMappedEvent = (event: ICalendarEvent<T>) => (
     <CalendarEvent
       key={`${event.start}${event.title}${event.end}`}
@@ -109,7 +122,7 @@ function _CalendarBody<T>({
       overlapOffset={overlapOffset}
       renderEvent={renderEvent}
       ampm={ampm}
-      moveCallBack={moveCallBack}
+      moveCallBack={whichDay}
     />
   )
 
@@ -117,12 +130,10 @@ function _CalendarBody<T>({
 
   return (
     <ScrollView
-      style={[
-        {
-          height: containerHeight - cellHeight * 3,
-        },
-        style,
-      ]}
+      onLayout={(event) => {
+        var { x, y, width, height } = event.nativeEvent.layout
+        setViewOffset(x, y, width, height)
+      }}
       ref={scrollView}
       scrollEventThrottle={32}
       {...(Platform.OS !== 'web' ? panResponder.panHandlers : {})}
@@ -173,7 +184,17 @@ function _CalendarBody<T>({
           ))}
         </View>
         {dateRange.map((date) => (
-          <View style={[u['flex-1'], u['overflow-hidden']]} key={date.toString()}>
+          <View
+            style={[u['flex-1'], u['overflow-hidden']]}
+            key={date.toString()}
+            onLayout={(event) => {
+              var { width } = event.nativeEvent.layout
+              if (parseInt(date.format('D')) % 7 == 0) {
+                console.log(width)
+                daysWidth = width
+              }
+            }}
+          >
             {hours.map((hour) => (
               <HourGuideCell
                 key={hour}

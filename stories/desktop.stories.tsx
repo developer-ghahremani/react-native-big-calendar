@@ -31,6 +31,9 @@ storiesOf('showcase - Desktop', module)
         onPressEvent={(event) => alert(event.title)}
         onPressCell={() => void 0}
         mode="day"
+        moveCallBack={(event) =>
+          alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+        }
       />
     </View>
   ))
@@ -42,6 +45,9 @@ storiesOf('showcase - Desktop', module)
         onPressEvent={(event) => alert(event.title)}
         onPressCell={() => void 0}
         mode="3days"
+        moveCallBack={(event) =>
+          alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+        }
       />
     </View>
   ))
@@ -56,7 +62,7 @@ storiesOf('showcase - Desktop', module)
           onPressCell={state.addEvent}
           headerDayNumberContainerStyle={{ backgroundColor: 'green' }}
           moveCallBack={(event) =>
-            alert('you moved this event/task to x: ' + event.moveX + ' and y: ' + event.moveY)
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
           }
         />
       </View>
