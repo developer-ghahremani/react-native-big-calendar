@@ -115,6 +115,7 @@ function _CalendarContainer<T>({
       setTargetDate(dayjs(date))
     }
   }, [date])
+  console.log(events)
 
   const allDayEvents = React.useMemo(
     () => events.filter((event) => isAllDayEvent(event.start, event.end)),
@@ -209,6 +210,7 @@ function _CalendarContainer<T>({
     allDayEvents: allDayEvents,
     onPressDateHeader: onPressDateHeader,
     DayNumberContainerStyle: headerDayNumberContainerStyle,
+    events: events,
   }
 
   return (

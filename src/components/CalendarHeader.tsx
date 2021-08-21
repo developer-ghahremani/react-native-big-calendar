@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import moment from 'jalali-moment'
+import moment, { duration } from 'jalali-moment'
 import * as React from 'react'
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 
@@ -14,6 +14,7 @@ export interface CalendarHeaderProps<T> {
   style: ViewStyle
   allDayEvents: ICalendarEvent<T>[]
   DayNumberContainerStyle: ViewStyle
+  events: ICalendarEvent<T>[]
   onPressDateHeader?: (date: Date) => void
 }
 
@@ -24,6 +25,7 @@ function _CalendarHeader<T>({
   allDayEvents,
   onPressDateHeader,
   DayNumberContainerStyle,
+  events,
 }: CalendarHeaderProps<T>) {
   const _onPress = React.useCallback(
     (date: Date) => {
@@ -36,6 +38,30 @@ function _CalendarHeader<T>({
 
   const borderColor = { borderColor: theme.palette.gray['200'] }
   const primaryBg = { backgroundColor: theme.palette.primary.main }
+
+  const todayColor = (date) => {
+    const todayEvents = events
+      .filter(({ start }) =>
+        dayjs(start).isBetween(date.startOf('day'), date.endOf('day'), null, '[)'),
+      )
+      .map((i) => {
+        return {
+          color: parseInt(i.color.substring(1, 6), 16),
+          duration: dayjs(i.end).diff(dayjs(i.start), 'hour', true),
+        }
+      })
+    if (todayEvents.length == 0) return { backgroundColor: DayNumberContainerStyle.backgroundColor }
+    console.log(todayEvents)
+    let weightedColor = 0
+    todayEvents.forEach((element) => {
+      weightedColor = weightedColor + element.color
+    })
+    weightedColor = weightedColor / todayEvents.length
+    var intWeightedColor = '#' + weightedColor.toString(16).toUpperCase()
+    while (intWeightedColor.length < 7) intWeightedColor = intWeightedColor + '0'
+    console.log(intWeightedColor)
+    return { backgroundColor: intWeightedColor }
+  }
 
   return (
     <View
@@ -87,6 +113,7 @@ function _CalendarHeader<T>({
                         u['self-center'],
                         u['z-20'],
                         DayNumberContainerStyle,
+                        todayColor(date),
                       ]
                     : [
                         primaryBg,
@@ -103,6 +130,7 @@ function _CalendarHeader<T>({
                           borderWidth: 2.5,
                           borderColor: DayNumberContainerStyle.backgroundColor,
                         },
+                        todayColor(date),
                       ]
                 }
               >

@@ -190,7 +190,6 @@ function _CalendarBody<T>({
             onLayout={(event) => {
               var { width } = event.nativeEvent.layout
               if (parseInt(date.format('D')) % 7 == 0) {
-                console.log(width)
                 daysWidth = width
               }
             }}

@@ -8,6 +8,7 @@ export interface ICalendarEventBase {
   start: Date
   end: Date
   title: string
+  color: string
   children?: ReactElement | null
 }
 
