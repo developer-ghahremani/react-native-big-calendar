@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 import * as React from 'react'
 import { Platform, ScrollView, StyleSheet, View, ViewStyle } from 'react-native'
 
@@ -48,10 +48,8 @@ interface CalendarBodyProps<T> {
 }
 
 function _CalendarBody<T>({
-  containerHeight,
   cellHeight,
   dateRange,
-  style,
   onPressCell,
   events,
   onPressEvent,

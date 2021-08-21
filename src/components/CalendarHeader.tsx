@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import moment, { duration } from 'jalali-moment'
+import moment from 'jalali-moment'
 import * as React from 'react'
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 

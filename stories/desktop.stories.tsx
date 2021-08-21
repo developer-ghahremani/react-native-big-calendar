@@ -81,10 +81,14 @@ storiesOf('showcase - Desktop', module)
               start: dayjs().add(2, 'days').toDate(),
               end: dayjs().add(2, 'days').add(5, 'hours').toDate(),
               title: 'This is sooooo long name event which will be truncated',
+              color: 'red',
             },
           ]}
           onPressEvent={(event) => alert(event.title)}
           onPressCell={state.addEvent}
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
         />
       </View>
     )
@@ -100,6 +104,9 @@ storiesOf('showcase - Desktop', module)
           events={state.events}
           onPressEvent={(event) => alert(event.title)}
           onPressCell={state.addEvent}
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
         />
       </View>
     )
@@ -113,6 +120,9 @@ storiesOf('showcase - Desktop', module)
           const backgroundColor = event.title.match(/Meeting/) ? 'red' : 'blue'
           return { backgroundColor }
         }}
+        moveCallBack={(event) =>
+          alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+        }
       />
     </View>
   ))
@@ -132,18 +142,35 @@ storiesOf('showcase - Desktop', module)
           events={events}
           date={date.toDate()}
           swipeEnabled={false}
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
         />
       </View>
     )
   })
   .add('scroll to some time', () => (
     <View style={styles.desktop}>
-      <Calendar height={SCREEN_HEIGHT} events={events} scrollOffsetMinutes={300} />
+      <Calendar
+        height={SCREEN_HEIGHT}
+        events={events}
+        scrollOffsetMinutes={300}
+        moveCallBack={(event) =>
+          alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+        }
+      />
     </View>
   ))
   .add('week start on Monday', () => (
     <View style={styles.desktop}>
-      <Calendar height={SCREEN_HEIGHT} events={events} weekStartsOn={1} />
+      <Calendar
+        height={SCREEN_HEIGHT}
+        events={events}
+        weekStartsOn={1}
+        moveCallBack={(event) =>
+          alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+        }
+      />
     </View>
   ))
   .add('all day event', () => {
@@ -153,12 +180,20 @@ storiesOf('showcase - Desktop', module)
         title: 'Vacation',
         start: dayjs().add(1, 'day').set('hour', 0).set('minute', 0).toDate(),
         end: dayjs().add(1, 'day').set('hour', 0).set('minute', 0).toDate(),
+        color: 'green',
       },
     ]
 
     return (
       <View style={styles.desktop}>
-        <Calendar height={SCREEN_HEIGHT} events={_events} weekStartsOn={1} />
+        <Calendar
+          height={SCREEN_HEIGHT}
+          events={_events}
+          weekStartsOn={1}
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
+        />
       </View>
     )
   })
@@ -170,6 +205,9 @@ storiesOf('showcase - Desktop', module)
           events={events}
           onPressDateHeader={(date) => alert(date)}
           mode="3days"
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
         />
       </View>
     )
@@ -180,25 +218,53 @@ storiesOf('showcase - Desktop', module)
     }, [])
     return (
       <View style={styles.desktop}>
-        <Calendar locale="ja" height={SCREEN_HEIGHT} events={events} />
+        <Calendar
+          locale="ja"
+          height={SCREEN_HEIGHT}
+          events={events}
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
+        />
       </View>
     )
   })
   .add('AM/PM format', () => {
     return (
       <View style={styles.desktop}>
-        <Calendar ampm height={SCREEN_HEIGHT} events={events} />
+        <Calendar
+          ampm
+          height={SCREEN_HEIGHT}
+          events={events}
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
+        />
       </View>
     )
   })
   .add('Hidden Now indicator', () => (
     <View style={styles.desktop}>
-      <Calendar height={SCREEN_HEIGHT} events={events} hideNowIndicator />
+      <Calendar
+        height={SCREEN_HEIGHT}
+        events={events}
+        hideNowIndicator
+        moveCallBack={(event) =>
+          alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+        }
+      />
     </View>
   ))
   .add('More overlap padding', () => (
     <View style={styles.desktop}>
-      <Calendar height={SCREEN_HEIGHT} events={events} overlapOffset={70} />
+      <Calendar
+        height={SCREEN_HEIGHT}
+        events={events}
+        overlapOffset={70}
+        moveCallBack={(event) =>
+          alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+        }
+      />
     </View>
   ))
   .add('RTL', () => {
@@ -207,14 +273,29 @@ storiesOf('showcase - Desktop', module)
     }, [])
     return (
       <View style={styles.desktop}>
-        <Calendar locale="he" height={SCREEN_HEIGHT} events={events} isRTL />
+        <Calendar
+          locale="he"
+          height={SCREEN_HEIGHT}
+          events={events}
+          isRTL
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
+        />
       </View>
     )
   })
   .add('Custom Event Component renderer', () => {
     return (
       <View style={styles.desktop}>
-        <Calendar height={SCREEN_HEIGHT} renderEvent={customEventRenderer} events={events} />
+        <Calendar
+          height={SCREEN_HEIGHT}
+          renderEvent={customEventRenderer}
+          events={events}
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
+        />
       </View>
     )
   })
@@ -226,6 +307,9 @@ storiesOf('showcase - Desktop', module)
         mode={'custom'}
         weekStartsOn={1}
         weekEndsOn={5}
+        moveCallBack={(event) =>
+          alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+        }
       />
     </View>
   ))
@@ -238,15 +322,20 @@ storiesOf('showcase - Desktop', module)
             title: 'Multiple span',
             start: dayjs().toDate(),
             end: dayjs().add(28, 'hour').toDate(),
+            color: 'blue',
           },
           {
             title: 'Multiple span longer',
             start: dayjs().add(29, 'hour').toDate(),
             end: dayjs().add(64, 'hour').toDate(),
+            color: 'blue',
           },
         ]}
         eventCellStyle={(event) => (/longer/.test(event.title) ? { backgroundColor: 'green' } : {})}
         mode={'week'}
+        moveCallBack={(event) =>
+          alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+        }
       />
     </View>
   ))
@@ -267,6 +356,9 @@ storiesOf('showcase - Desktop', module)
               },
             },
           }}
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
         />
       </View>
     )
@@ -281,6 +373,9 @@ storiesOf('showcase - Desktop', module)
           onPressEvent={(event) => alert(event.title)}
           onPressCell={state.addEvent}
           theme={themes.dark}
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
         />
       </View>
     )
@@ -295,6 +390,9 @@ storiesOf('showcase - Desktop', module)
           onPressEvent={(event) => alert(event.title)}
           onPressCell={state.addEvent}
           renderHeader={() => null}
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
         />
       </View>
     )
@@ -310,6 +408,9 @@ storiesOf('showcase - Desktop', module)
           onPressCell={state.addEvent}
           renderHeaderForMonthView={() => null}
           mode="month"
+          moveCallBack={(event) =>
+            alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+          }
         />
       </View>
     )
