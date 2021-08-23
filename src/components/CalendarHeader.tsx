@@ -6,7 +6,7 @@ import { Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 import { eventCellCss, u } from '../commonStyles'
 import { ICalendarEvent } from '../interfaces'
 import { useTheme } from '../theme/ThemeContext'
-import { isToday, transformToPersianNumbers, typedMemo } from '../utils'
+import { isToday, typedMemo } from '../utils'
 
 export interface CalendarHeaderProps<T> {
   dateRange: dayjs.Dayjs[]
@@ -45,13 +45,13 @@ function _CalendarHeader<T>({
         dayjs(start).isBetween(date.startOf('day'), date.endOf('day'), null, '[)'),
       )
       .map((i) => {
+        if (!(i && i.color)) i.color = 'FFFF00'
         return {
-          color: parseInt(i.color.substring(1, 6), 16),
+          color: parseInt(i && i.color && i.color.substring(1, 6), 16),
           duration: dayjs(i.end).diff(dayjs(i.start), 'hour', true),
         }
       })
     if (todayEvents.length == 0) return { backgroundColor: DayNumberContainerStyle.backgroundColor }
-    console.log(todayEvents)
     let weightedColor = 0
     todayEvents.forEach((element) => {
       weightedColor = weightedColor + element.color
@@ -59,7 +59,6 @@ function _CalendarHeader<T>({
     weightedColor = weightedColor / todayEvents.length
     var intWeightedColor = '#' + weightedColor.toString(16).toUpperCase()
     while (intWeightedColor.length < 7) intWeightedColor = intWeightedColor + '0'
-    console.log(intWeightedColor)
     return { backgroundColor: intWeightedColor }
   }
 
@@ -160,9 +159,7 @@ function _CalendarHeader<T>({
                     //Platform.OS === 'web' && _isToday && u['mt-6'],
                   ]}
                 >
-                  {transformToPersianNumbers(
-                    moment(date.format('YYYY-M-D'), 'YYYY-M-D HH:mm:ss').locale('fa').format('D'),
-                  )}
+                  {moment(date.format('YYYY-M-D'), 'YYYY-M-D HH:mm:ss').locale('fa').format('D')}
                 </Text>
               </View>
             </View>

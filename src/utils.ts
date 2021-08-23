@@ -216,11 +216,10 @@ function weekDaysCount(weekStartsOn: WeekNum, weekEndsOn: WeekNum) {
 }
 
 export function transformToPersianNumbers(en_number: string) {
-  // let persianDigits = '۰۱۲۳۴۵۶۷۸۹'
-  // let persianMap = persianDigits.split('')
-  // let persian_number = en_number.replace(/\d/g, function (m) {
-  //   return persianMap[parseInt(m)]
-  // })
-  // return persian_number
-  return en_number
+  let persianDigits = '۰۱۲۳۴۵۶۷۸۹'
+  let persianMap = persianDigits.split('')
+  let persian_number = en_number.replace(/\d/g, function (m) {
+    return persianMap[parseInt(m)]
+  })
+  return persian_number
 }

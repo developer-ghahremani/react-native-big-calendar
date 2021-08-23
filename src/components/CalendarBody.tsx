@@ -4,7 +4,7 @@ import { Platform, ScrollView, StyleSheet, View, ViewStyle } from 'react-native'
 
 import { u } from '../commonStyles'
 import { useNow } from '../hooks/useNow'
-import { usePanResponder } from '../hooks/usePanResponder'
+// import { usePanResponder } from '../hooks/usePanResponder'
 import { EventCellStyle, EventRenderer, HorizontalDirection, ICalendarEvent } from '../interfaces'
 import { useTheme } from '../theme/ThemeContext'
 import {
@@ -57,7 +57,6 @@ function _CalendarBody<T>({
   ampm,
   showTime,
   scrollOffsetMinutes,
-  onSwipeHorizontal,
   hideNowIndicator,
   overlapOffset,
   renderEvent,
@@ -86,9 +85,9 @@ function _CalendarBody<T>({
     }
   }, [scrollView, scrollOffsetMinutes, cellHeight])
 
-  const panResponder = usePanResponder({
-    onSwipeHorizontal,
-  })
+  // const panResponder = usePanResponder({
+  //   onSwipeHorizontal,
+  // })
 
   const _onPressCell = React.useCallback(
     (date: dayjs.Dayjs) => {
@@ -100,7 +99,8 @@ function _CalendarBody<T>({
   const whichDay = (event) => {
     let dayMove: number = (event.moveX - event.x0) / daysWidth
     let hourMove: number = (event.moveY - event.y0) / 41.66
-    console.log('you moved ' + dayMove + ' day and ' + hourMove + ' hours')
+    console.log('here is event')
+    console.log(event)
     return moveCallBack({ dayMove: dayMove, hourMove: hourMove })
   }
 
@@ -134,7 +134,7 @@ function _CalendarBody<T>({
       }}
       ref={scrollView}
       scrollEventThrottle={32}
-      {...(Platform.OS !== 'web' ? panResponder.panHandlers : {})}
+      // {...(Platform.OS !== 'web' ? panResponder.panHandlers : {})}
       showsVerticalScrollIndicator={false}
       nestedScrollEnabled
       contentOffset={Platform.OS === 'ios' ? { x: 0, y: scrollOffsetMinutes } : { x: 0, y: 0 }}

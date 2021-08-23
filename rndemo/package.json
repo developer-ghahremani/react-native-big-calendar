@@ -11,10 +11,12 @@
   "dependencies": {
     "calendarize": "^1.1.1",
     "dayjs": "^1.10.4",
+    "jalali-moment": "^3.3.10",
     "merge-anything": "^4.0.1",
     "react": "17.0.1",
     "react-native": "0.64.1",
-    "jalali-moment": "^3.3.10"
+    "react-native-drax": "^0.8.1",
+    "react-native-gesture-handler": "^1.10.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

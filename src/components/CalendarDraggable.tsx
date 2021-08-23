@@ -1,8 +1,20 @@
 import React, { useRef } from 'react'
-import { Animated, PanResponder, StyleSheet } from 'react-native'
+import { Animated, Dimensions, PanResponder, StyleSheet } from 'react-native'
+
+export interface panXY {
+  _value: number
+}
+export interface currentType {
+  x: any
+  y: any
+  setOffset: any
+  flattenOffset: any
+}
 
 export const Draggable = (props) => {
-  const pan = useRef(new Animated.ValueXY()).current
+  const pan: currentType = useRef(new Animated.ValueXY()).current
+  console.log('here is pan: ')
+  console.log(pan)
 
   const panResponder = useRef(
     PanResponder.create({
@@ -14,10 +26,12 @@ export const Draggable = (props) => {
         })
       },
       onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
-        useNativeDriver: false,
+        useNativeDriver: true,
       }),
-      onPanResponderRelease: (e, gestureState) => {
+      onPanResponderRelease: (_e, gestureState) => {
         pan.flattenOffset()
+        console.log('here is gesture state:')
+        console.log(gestureState)
         props.moveCallBack(gestureState)
       },
     }),
@@ -28,14 +42,17 @@ export const Draggable = (props) => {
   const dayDif = days.indexOf(day)
   const marginLeft = dayDif * 14.28
   const minusLeft = dayDif * 7.14
+  const a = Dimensions.get('screen').width
+  const leftCss = (marginLeft * a) / 100 - minusLeft
+  const widthCss = a / 7 - 10
 
   return (
     <Animated.View
       style={[
         (props.touchableOpacityProps && props.touchableOpacityProps.style) || styles.box,
         {
-          marginLeft: `calc( ${marginLeft}% - ${minusLeft}px)`,
-          width: 'calc(14.28% - 7.14px)',
+          marginLeft: leftCss,
+          width: widthCss,
           transform: [{ translateX: pan.x }, { translateY: pan.y }],
         },
       ]}

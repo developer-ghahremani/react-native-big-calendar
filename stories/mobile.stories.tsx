@@ -45,7 +45,10 @@ storiesOf('showcase - Mobile', module)
       <Calendar
         height={MOBILE_HEIGHT}
         events={events}
-        moveCallBack={(event) => console.log(event)}
+        headerDayNumberContainerStyle={{ backgroundColor: 'green' }}
+        moveCallBack={(event) =>
+          alert('you moved this event ' + event.dayMove + 'days and ' + event.hourMove + 'hours')
+        }
       />
     </View>
   ))

@@ -1,6 +1,6 @@
 {
   "name": "react-native-draggable-big-calendar",
-  "version": "1.0.6",
+  "version": "1.0.2",
   "main": "build/index.js",
   "jsnext:main": "build/index.es.js",
   "module": "build/index.es.js",
@@ -29,14 +29,16 @@
     "build:ts": "env NODE_ENV=production rollup -c"
   },
   "dependencies": {
+    "@react-native-community/cli": "^5.0.1",
     "calendarize": "^1.1.1",
     "dayjs": "^1.10.6",
     "jalali-moment": "^3.3.10",
-    "merge-anything": "^4.0.1"
+    "merge-anything": "^4.0.1",
+    "react-native-eject": "^0.1.2"
   },
   "peerDependencies": {
     "react": "^16.8.3",
-    "react-native": "^0.59.0"
+    "react-native": "0.63.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
