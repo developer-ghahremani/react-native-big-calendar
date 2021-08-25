@@ -4,7 +4,7 @@ import { Text, TouchableOpacity } from 'react-native'
 
 import { CalendarTouchableOpacityProps, ICalendarEvent } from '../interfaces'
 import { useTheme } from '../theme/ThemeContext'
-import { formatStartEnd } from '../utils'
+// import { formatStartEnd } from '../utils'
 import { Draggable } from './CalendarDraggable'
 
 interface DefaultCalendarEventRendererProps<T> {
@@ -14,41 +14,48 @@ interface DefaultCalendarEventRendererProps<T> {
   textColor: string
   ampm: boolean
   moveCallBack: any
+  events: ICalendarEvent<T>[]
 }
 
 export function DefaultCalendarEventRenderer<T>({
   touchableOpacityProps,
   event,
-  showTime = true,
+  showTime = false,
   textColor,
-  ampm,
+  // ampm,
   moveCallBack,
+  events,
 }: DefaultCalendarEventRendererProps<T>) {
   const theme = useTheme()
-  const eventTimeStyle = { fontSize: theme.typography.xs.fontSize, color: textColor }
+  // const eventTimeStyle = { fontSize: theme.typography.xs.fontSize, color: textColor }
   const eventTitleStyle = { fontSize: theme.typography.sm.fontSize, color: textColor }
 
   return (
-    <Draggable touchableOpacityProps={touchableOpacityProps} moveCallBack={moveCallBack}>
+    <Draggable
+      touchableOpacityProps={touchableOpacityProps}
+      moveCallBack={moveCallBack}
+      event={event}
+      events={events}
+    >
       <TouchableOpacity
         onPress={touchableOpacityProps.onPress}
         style={{ width: '100%', height: '100%' }}
       >
         {dayjs(event.end).diff(event.start, 'minute') < 32 && showTime ? (
           <Text style={eventTitleStyle}>
-            {event.title},
-            <Text style={eventTimeStyle}>
+            {event.title}
+            {/* <Text style={eventTimeStyle}>
               {dayjs(event.start).format(ampm ? 'hh:mm a' : 'HH:mm')}
-            </Text>
+            </Text> */}
           </Text>
         ) : (
           <>
             <Text style={eventTitleStyle}>{event.title}</Text>
-            {showTime && (
+            {/* {showTime && (
               <Text style={eventTimeStyle}>
                 {formatStartEnd(event.start, event.end, ampm ? 'h:mm a' : 'HH:mm')}
               </Text>
-            )}
+            )} */}
             {event.children && event.children}
           </>
         )}

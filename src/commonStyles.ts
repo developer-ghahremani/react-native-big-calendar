@@ -2,14 +2,14 @@ import { Platform, StyleSheet } from 'react-native'
 
 export const MIN_HEIGHT = 1000
 export const HOUR_GUIDE_WIDTH = 50
-export const OVERLAP_OFFSET = Platform.OS === 'web' ? 20 : 8
-export const OVERLAP_PADDING = Platform.OS === 'web' ? 3 : 0
+export const OVERLAP_OFFSET = Platform.OS === 'web' ? 10 : 10
+export const OVERLAP_PADDING = Platform.OS === 'web' ? 1 : 1
 
 export const eventCellCss = StyleSheet.create({
   style: {
     zIndex: 100,
     borderRadius: 3,
-    padding: 4,
+    padding: 1,
     overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },

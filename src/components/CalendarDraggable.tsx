@@ -1,5 +1,8 @@
 import React, { useRef } from 'react'
-import { Animated, Dimensions, PanResponder, StyleSheet } from 'react-native'
+import { Animated, PanResponder, StyleSheet } from 'react-native'
+
+import { getCountOfEventsAtEvent, getOrderOfEvent } from '../utils'
+import { widthContext } from './CalendarBody'
 
 export interface panXY {
   _value: number
@@ -9,30 +12,41 @@ export interface currentType {
   y: any
   setOffset: any
   flattenOffset: any
+  setValue: any
 }
 
 export const Draggable = (props) => {
   const pan: currentType = useRef(new Animated.ValueXY()).current
-  console.log('here is pan: ')
-  console.log(pan)
+  const cellWidth = React.useContext(widthContext)
+  const cellHeight = 1000 / 24
 
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
+      onPanResponderGrant: (_e, _gestureState) => {
         pan.setOffset({
           x: pan.x._value,
           y: pan.y._value,
         })
+        console.log(_gestureState)
       },
-      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
-        useNativeDriver: true,
-      }),
+      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
       onPanResponderRelease: (_e, gestureState) => {
+        const xUnit = (cellWidth - 50) / 7
+        const xDif = gestureState.moveX - gestureState.x0
+        const xUnits = Math.floor(xDif / xUnit + 0.5)
+
+        const yUnit = cellHeight
+        const yDif = gestureState.moveY - gestureState.y0
+        var yUnits = Math.floor((4 * yDif) / yUnit + 0.5)
+        yUnits = yUnits / 4
+
+        pan.setValue({ x: xUnits * xUnit, y: yUnit * yUnits })
         pan.flattenOffset()
-        console.log('here is gesture state:')
-        console.log(gestureState)
-        props.moveCallBack(gestureState)
+        console.log('here is moving stats:')
+        console.log(xUnits, yUnits)
+        const change = { day: xUnits, hour: yUnits }
+        props.moveCallBack(change)
       },
     }),
   ).current
@@ -40,20 +54,24 @@ export const Draggable = (props) => {
   const day = props.touchableOpacityProps.key.substring(0, 2)
   const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
   const dayDif = days.indexOf(day)
-  const marginLeft = dayDif * 14.28
+  const marginLeftInPercent = dayDif * 14.28
   const minusLeft = dayDif * 7.14
-  const a = Dimensions.get('screen').width
-  const leftCss = (marginLeft * a) / 100 - minusLeft
-  const widthCss = a / 7 - 10
+  var widthCss = 0.1428 * cellWidth - 9.14
+  const leftCellCss = (marginLeftInPercent * cellWidth) / 100 - minusLeft
+  const numberOfThisTimeEvent = getCountOfEventsAtEvent(props.event, props.events)
+  const marginLeftInCell =
+    (getOrderOfEvent(props.event, props.events) * widthCss) / numberOfThisTimeEvent
+  widthCss = widthCss / numberOfThisTimeEvent - 3
 
   return (
     <Animated.View
       style={[
         (props.touchableOpacityProps && props.touchableOpacityProps.style) || styles.box,
         {
-          marginLeft: leftCss,
+          marginLeft: leftCellCss + marginLeftInCell + 3,
           width: widthCss,
           transform: [{ translateX: pan.x }, { translateY: pan.y }],
+          backgroundColor: props.event.color,
         },
       ]}
       {...panResponder.panHandlers}

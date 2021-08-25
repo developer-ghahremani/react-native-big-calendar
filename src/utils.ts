@@ -3,7 +3,6 @@ import React from 'react'
 
 import { OVERLAP_PADDING } from './commonStyles'
 import { ICalendarEvent, Mode, WeekNum } from './interfaces'
-import { Palette } from './theme/ThemeInterface'
 
 export const typedMemo: <T>(c: T) => T = React.memo
 
@@ -153,20 +152,14 @@ export function getOrderOfEvent(event: ICalendarEvent<any>, eventList: ICalendar
   return index === -1 ? 0 : index
 }
 
-export function getStyleForOverlappingEvent(
-  eventPosition: number,
-  overlapOffset: number,
-  palettes: Palette[],
-) {
+export function getStyleForOverlappingEvent(eventPosition: number, overlapOffset: number) {
   let overlapStyle = {}
   const offset = overlapOffset
   const start = eventPosition * offset
-  const zIndex = 100 + eventPosition
-  const bgColors = palettes.map((p) => p.main)
+  const zIndex = 100 + eventPosition + start * 0
   overlapStyle = {
-    start: start + OVERLAP_PADDING + 50,
+    start: 0 + 50,
     end: OVERLAP_PADDING,
-    backgroundColor: bgColors[eventPosition % bgColors.length] || bgColors[0],
     zIndex,
   }
   return overlapStyle

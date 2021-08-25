@@ -39,27 +39,52 @@ function _CalendarHeader<T>({
   const borderColor = { borderColor: theme.palette.gray['200'] }
   const primaryBg = { backgroundColor: theme.palette.primary.main }
 
-  const todayColor = (date) => {
+  const appendZero = (hexaValue) => {
+    while (hexaValue.length < 2) hexaValue = '0' + hexaValue
+    return hexaValue
+  }
+
+  const calculateWeightedColor = (dayEvents) => {
+    let totalDuration = 0
+    let totalR = 0
+    let totalG = 0
+    let totalB = 104
+    dayEvents.forEach((element) => {
+      const r = parseInt(element.color.substring(0, 2), 16) * element.duration
+      const g = parseInt(element.color.substring(2, 4), 16) * element.duration
+      const b = parseInt(element.color.substring(4, 6), 16) * element.duration
+      totalR = totalR + r
+      totalG = totalG + g
+      totalB = totalB + b
+      totalDuration = totalDuration + element.duration
+    })
+    const meanR = Math.round(totalR / totalDuration)
+    const meanG = Math.round(totalG / totalDuration)
+    const meanB = Math.round(totalB / totalDuration)
+    const weightedColor =
+      '#' +
+      appendZero(meanR.toString(16).toUpperCase()) +
+      appendZero(meanG.toString(16).toUpperCase()) +
+      appendZero(meanB.toString(16).toUpperCase())
+    return weightedColor
+  }
+
+  const todayColor = (date, isTopDay) => {
     const todayEvents = events
       .filter(({ start }) =>
         dayjs(start).isBetween(date.startOf('day'), date.endOf('day'), null, '[)'),
       )
       .map((i) => {
-        if (!(i && i.color)) i.color = 'FFFF00'
+        if (!(i && i.color)) i.color = '#FFFF00'
         return {
-          color: parseInt(i && i.color && i.color.substring(1, 6), 16),
+          color: i.color.substring(1, 7),
           duration: dayjs(i.end).diff(dayjs(i.start), 'hour', true),
         }
       })
-    if (todayEvents.length == 0) return { backgroundColor: DayNumberContainerStyle.backgroundColor }
-    let weightedColor = 0
-    todayEvents.forEach((element) => {
-      weightedColor = weightedColor + element.color
-    })
-    weightedColor = weightedColor / todayEvents.length
-    var intWeightedColor = '#' + weightedColor.toString(16).toUpperCase()
-    while (intWeightedColor.length < 7) intWeightedColor = intWeightedColor + '0'
-    return { backgroundColor: intWeightedColor }
+    if (todayEvents.length == 0 && !isTopDay) return 'transparent'
+    if (todayEvents.length == 0 && isTopDay) return '#2E2E2E'
+    let weightedColor = calculateWeightedColor(todayEvents)
+    return weightedColor
   }
 
   return (
@@ -67,6 +92,7 @@ function _CalendarHeader<T>({
       style={[
         u['border-b-2'],
         u['pt-2'],
+        { backgroundColor: '#FAFAFA' },
         borderColor,
         theme.isRTL ? u['flex-row-reverse'] : u['flex-row'],
         style,
@@ -94,7 +120,7 @@ function _CalendarHeader<T>({
                   theme.typography.xs,
                   u['text-center'],
                   u['mb-4'],
-                  { color: _isToday ? theme.palette.primary.main : theme.palette.gray['500'] },
+                  { color: todayColor(date, true) },
                 ]}
               >
                 {date.format('ddd')[0]}
@@ -112,7 +138,7 @@ function _CalendarHeader<T>({
                         u['self-center'],
                         u['z-20'],
                         DayNumberContainerStyle,
-                        todayColor(date),
+                        { backgroundColor: todayColor(date, false) },
                       ]
                     : [
                         primaryBg,
@@ -125,21 +151,15 @@ function _CalendarHeader<T>({
                         u['self-center'],
                         u['z-20'],
                         {
-                          backgroundColor: '#0',
                           borderWidth: 2.5,
-                          borderColor: DayNumberContainerStyle.backgroundColor,
+                          borderColor: todayColor(date, false),
+                          backgroundColor: 'transparent',
                         },
-                        todayColor(date),
                       ]
                 }
               >
                 <Text
                   style={[
-                    {
-                      color: !_isToday
-                        ? theme.palette.primary.contrastText
-                        : theme.palette.gray['800'],
-                    },
                     theme.typography.sm,
                     u['text-center'],
                     //Platform.OS === 'web' && _isToday && u['mt-6'],
@@ -149,11 +169,6 @@ function _CalendarHeader<T>({
                 </Text>
                 <Text
                   style={[
-                    {
-                      color: !_isToday
-                        ? theme.palette.primary.contrastText
-                        : theme.palette.gray['800'],
-                    },
                     theme.typography.xs,
                     u['text-center'],
                     //Platform.OS === 'web' && _isToday && u['mt-6'],

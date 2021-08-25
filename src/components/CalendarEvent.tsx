@@ -14,7 +14,7 @@ const getEventCellPositionStyle = (start: Date, end: Date) => {
   return {
     height: `${relativeHeight}%`,
     top: `${relativeTop}%`,
-    marginLeft: `20%`,
+    marginLeft: 200,
   }
 }
 
@@ -29,6 +29,8 @@ interface CalendarEventProps<T> {
   renderEvent?: EventRenderer<T>
   ampm: boolean
   moveCallBack: any
+  events: ICalendarEvent<T>[]
+  dateRange: dayjs.Dayjs[]
 }
 
 function _CalendarEvent<T>({
@@ -42,6 +44,7 @@ function _CalendarEvent<T>({
   renderEvent,
   ampm,
   moveCallBack,
+  events,
 }: CalendarEventProps<T>) {
   const theme = useTheme()
 
@@ -56,7 +59,7 @@ function _CalendarEvent<T>({
     onPressEvent,
     injectedStyles: [
       getEventCellPositionStyle(event.start, event.end),
-      getStyleForOverlappingEvent(eventOrder, overlapOffset, palettes),
+      getStyleForOverlappingEvent(eventOrder, overlapOffset),
       u['absolute'],
       u['mt-2'],
       u['mx-3'],
@@ -80,6 +83,7 @@ function _CalendarEvent<T>({
       touchableOpacityProps={touchableOpacityProps}
       textColor={textColor}
       moveCallBack={moveCallBack}
+      events={events}
     />
   )
 }
