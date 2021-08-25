@@ -67,7 +67,6 @@ function _CalendarBody<T>({
   const scrollView = React.useRef<ScrollView>(null)
   const { now } = useNow(!hideNowIndicator)
   const layoutProps = React.useRef({ x: 0, y: 0, width: 500, height: 1000 })
-  var daysWidth = 0
   const [calculatedWidth, setCalculatedWidth] = React.useState(400)
 
   React.useEffect(() => {
@@ -99,12 +98,6 @@ function _CalendarBody<T>({
     [onPressCell],
   )
 
-  const whichDay = (event) => {
-    let dayMove: number = (event.moveX - event.x0) / daysWidth
-    let hourMove: number = (event.moveY - event.y0) / 41.66
-    return moveCallBack({ dayMove: dayMove, hourMove: hourMove })
-  }
-
   const setViewOffset = (x: number, y: number, width: number, height: number) => {
     layoutProps.current = { x, y, width, height }
   }
@@ -121,7 +114,7 @@ function _CalendarBody<T>({
       overlapOffset={overlapOffset}
       renderEvent={renderEvent}
       ampm={ampm}
-      moveCallBack={whichDay}
+      moveCallBack={moveCallBack}
       events={events}
       dateRange={dateRange}
     />
@@ -143,6 +136,9 @@ function _CalendarBody<T>({
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled
         contentOffset={Platform.OS === 'ios' ? { x: 0, y: scrollOffsetMinutes } : { x: 0, y: 0 }}
+        alwaysBounceHorizontal={false}
+        alwaysBounceVertical={false}
+        bounces={false}
       >
         {dateRange.map((date) =>
           events
@@ -187,16 +183,7 @@ function _CalendarBody<T>({
             ))}
           </View>
           {dateRange.map((date) => (
-            <View
-              style={[u['flex-1'], u['overflow-hidden']]}
-              key={date.toString()}
-              onLayout={(event) => {
-                var { width } = event.nativeEvent.layout
-                if (parseInt(date.format('D')) % 7 == 0) {
-                  daysWidth = width
-                }
-              }}
-            >
+            <View style={[u['flex-1'], u['overflow-hidden']]} key={date.toString()}>
               {hours.map((hour) => (
                 <HourGuideCell
                   key={hour}
@@ -206,46 +193,6 @@ function _CalendarBody<T>({
                   onPress={_onPressCell}
                 />
               ))}
-
-              {/* Render events of this date */}
-              {/* M  T  (W)  T  F  S  S */}
-              {/*       S-E             */}
-              {/* {events
-              .filter(({ start }) =>
-                dayjs(start).isBetween(date.startOf('day'), date.endOf('day'), null, '[)'),
-              )
-              .map(_renderMappedEvent)} */}
-
-              {/* Render events which starts before this date and ends on this date */}
-              {/* M  T  (W)  T  F  S  S */}
-              {/* S------E              */}
-              {/* {events
-              .filter(
-                ({ start, end }) =>
-                  dayjs(start).isBefore(date.startOf('day')) &&
-                  dayjs(end).isBetween(date.startOf('day'), date.endOf('day'), null, '[)'),
-              )
-              .map((event) => ({
-                ...event,
-                start: dayjs(event.end).startOf('day'),
-              }))
-              .map(_renderMappedEvent)} */}
-
-              {/* Render events which starts before this date and ends after this date */}
-              {/* M  T  (W)  T  F  S  S */}
-              {/*    S-------E          */}
-              {/* {events
-              .filter(
-                ({ start, end }) =>
-                  dayjs(start).isBefore(date.startOf('day')) &&
-                  dayjs(end).isAfter(date.endOf('day')),
-              )
-              .map((event) => ({
-                ...event,
-                start: dayjs(event.end).startOf('day'),
-                end: dayjs(event.end).endOf('day'),
-              }))
-              .map(_renderMappedEvent)} */}
 
               {isToday(date) && !hideNowIndicator && (
                 <View

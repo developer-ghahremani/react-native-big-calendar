@@ -28,7 +28,6 @@ export const Draggable = (props) => {
           x: pan.x._value,
           y: pan.y._value,
         })
-        console.log(_gestureState)
       },
       onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
       onPanResponderRelease: (_e, gestureState) => {
@@ -43,8 +42,6 @@ export const Draggable = (props) => {
 
         pan.setValue({ x: xUnits * xUnit, y: yUnit * yUnits })
         pan.flattenOffset()
-        console.log('here is moving stats:')
-        console.log(xUnits, yUnits)
         const change = { day: xUnits, hour: yUnits }
         props.moveCallBack(change)
       },

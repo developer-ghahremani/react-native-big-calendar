@@ -1,6 +1,6 @@
 {
   "name": "react-native-draggable-big-calendar",
-  "version": "1.7.0",
+  "version": "1.9.0",
   "main": "build/index.js",
   "jsnext:main": "build/index.es.js",
   "module": "build/index.es.js",
@@ -38,7 +38,7 @@
   },
   "peerDependencies": {
     "react": "^16.8.3",
-    "react-native": "0.63.0"
+    "react-native": "0.59.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
