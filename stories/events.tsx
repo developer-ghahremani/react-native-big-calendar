@@ -62,6 +62,36 @@ export const events: ICalendarEvent<{ color?: string }>[] = [
     children: eventNotes,
     color: '#34eb49',
   },
+  {
+    title: 'test',
+    start: dayjs().add(1, 'day').set('hour', 0).set('minute', 0).toDate(),
+    end: dayjs().add(2, 'day').set('hour', 0).set('minute', 0).toDate(),
+    color: '#ebe834',
+  },
+  {
+    title: 'test',
+    start: dayjs().add(1, 'day').set('hour', 0).set('minute', 0).toDate(),
+    end: dayjs().add(2, 'day').set('hour', 0).set('minute', 0).toDate(),
+    color: '#ebe834',
+  },
+  {
+    title: 'test',
+    start: dayjs().add(1, 'day').set('hour', 0).set('minute', 0).toDate(),
+    end: dayjs().add(2, 'day').set('hour', 0).set('minute', 0).toDate(),
+    color: '#ebe834',
+  },
+  {
+    title: 'test',
+    start: dayjs().add(1, 'day').set('hour', 0).set('minute', 0).toDate(),
+    end: dayjs().add(2, 'day').set('hour', 0).set('minute', 0).toDate(),
+    color: '#ebe834',
+  },
+  {
+    title: 'test',
+    start: dayjs().add(1, 'day').set('hour', 0).set('minute', 0).toDate(),
+    end: dayjs().add(2, 'day').set('hour', 0).set('minute', 0).toDate(),
+    color: '#ebe834',
+  },
 ]
 
 export interface MyCustomEventType {

@@ -29,7 +29,9 @@ export const Draggable = (props) => {
           y: pan.y._value,
         })
       },
-      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
+      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
+        useNativeDriver: false,
+      }),
       onPanResponderRelease: (_e, gestureState) => {
         const xUnit = (cellWidth - 50) / 7
         const xDif = gestureState.moveX - gestureState.x0
@@ -42,7 +44,7 @@ export const Draggable = (props) => {
 
         pan.setValue({ x: xUnits * xUnit, y: yUnit * yUnits })
         pan.flattenOffset()
-        const change = { day: xUnits, hour: yUnits }
+        const change = { day: xUnits, hour: yUnits, event: props.event }
         props.moveCallBack(change)
       },
     }),

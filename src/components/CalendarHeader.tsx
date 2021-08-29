@@ -101,7 +101,9 @@ function _CalendarHeader<T>({
       <View style={[u['w-50'], u['items-center']]}>
         <Text style={[theme.typography.xs, u['mb-4']]}>Week</Text>
         <View style={[u['w-36'], u['h-36'], u['bordered'], u['justify-center'], u['items-center']]}>
-          <Text style={[theme.typography.xl]}>4</Text>
+          <Text style={[theme.typography.xl]}>
+            {Math.ceil(parseInt(dayjs(dateRange[0]).format('DD')) / 7)}
+          </Text>
         </View>
         <Text style={[theme.typography.xs, u['mt-6']]}>All day</Text>
       </View>
