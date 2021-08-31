@@ -58,7 +58,7 @@ storiesOf('showcase - Desktop', module)
         <Calendar
           height={SCREEN_HEIGHT}
           events={state.events}
-          onPressEvent={(event) => alert(event.title)}
+          onPressEvent={(event) => alert(event)}
           onPressCell={state.addEvent}
           headerDayNumberContainerStyle={{ backgroundColor: 'green' }}
           moveCallBack={(event) =>

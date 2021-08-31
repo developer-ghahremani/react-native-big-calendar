@@ -16,6 +16,7 @@ export interface CalendarHeaderProps<T> {
   DayNumberContainerStyle: ViewStyle
   events: ICalendarEvent<T>[]
   onPressDateHeader?: (date: Date) => void
+  onPressEvent?: (event: ICalendarEvent<T>) => void
 }
 
 function _CalendarHeader<T>({
@@ -26,6 +27,7 @@ function _CalendarHeader<T>({
   onPressDateHeader,
   DayNumberContainerStyle,
   events,
+  onPressEvent = () => console.log('onPressEvent'),
 }: CalendarHeaderProps<T>) {
   const _onPress = React.useCallback(
     (date: Date) => {
@@ -188,9 +190,10 @@ function _CalendarHeader<T>({
                   return null
                 }
                 return (
-                  <View
+                  <TouchableOpacity
                     style={[eventCellCss.style, primaryBg]}
                     key={`${event.start}${event.title}`}
+                    onPress={() => onPressEvent(event)}
                   >
                     <Text
                       style={{
@@ -200,7 +203,7 @@ function _CalendarHeader<T>({
                     >
                       {event.title}
                     </Text>
-                  </View>
+                  </TouchableOpacity>
                 )
               })}
             </View>

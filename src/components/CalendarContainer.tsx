@@ -210,6 +210,7 @@ function _CalendarContainer<T>({
     onPressDateHeader: onPressDateHeader,
     DayNumberContainerStyle: headerDayNumberContainerStyle,
     events: events,
+    onPressEvent: onPressEvent,
   }
 
   return (
