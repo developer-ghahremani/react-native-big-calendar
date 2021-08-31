@@ -45,6 +45,7 @@ function _CalendarEvent<T>({
   ampm,
   moveCallBack,
   events,
+  dateRange,
 }: CalendarEventProps<T>) {
   const theme = useTheme()
 
@@ -84,6 +85,7 @@ function _CalendarEvent<T>({
       textColor={textColor}
       moveCallBack={moveCallBack}
       events={events}
+      dateRange={dateRange}
     />
   )
 }

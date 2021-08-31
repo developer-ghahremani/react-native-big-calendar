@@ -96,7 +96,7 @@ function _CalendarContainer<T>({
   bodyContainerStyle = {},
   headerDayNumberContainerStyle = {},
   swipeEnabled = true,
-  weekStartsOn = 0,
+  weekStartsOn = 1,
   onChangeDate,
   onPressCell,
   onPressDateHeader,

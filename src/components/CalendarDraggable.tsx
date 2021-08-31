@@ -56,11 +56,16 @@ export const Draggable = (props) => {
   const marginLeftInPercent = dayDif * 14.28
   const minusLeft = dayDif * 7.14
   var widthCss = 0.1428 * cellWidth - 9.14
-  const leftCellCss = (marginLeftInPercent * cellWidth) / 100 - minusLeft
+  var leftCellCss = (marginLeftInPercent * cellWidth) / 100 - minusLeft
   const numberOfThisTimeEvent = getCountOfEventsAtEvent(props.event, props.events)
-  const marginLeftInCell =
+  var marginLeftInCell =
     (getOrderOfEvent(props.event, props.events) * widthCss) / numberOfThisTimeEvent
   widthCss = widthCss / numberOfThisTimeEvent - 3
+
+  if (Object.keys(props.dateRange).length == 1) {
+    widthCss = widthCss * 7 + 28
+    leftCellCss = 0
+  }
 
   return (
     <Animated.View

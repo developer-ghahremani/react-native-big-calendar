@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import moment from 'jalali-moment'
 import * as React from 'react'
-import { Text, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { Platform, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 
 import { eventCellCss, u } from '../commonStyles'
 import { ICalendarEvent } from '../interfaces'
@@ -124,7 +124,10 @@ function _CalendarHeader<T>({
                   theme.typography.xs,
                   u['text-center'],
                   u['mb-4'],
-                  { color: todayColor(date, true) },
+                  {
+                    color: todayColor(date, true),
+                    fontFamily: Platform.OS == 'ios' ? 'Didot' : 'monospace',
+                  },
                 ]}
               >
                 {date.format('ddd')[0]}
@@ -166,6 +169,7 @@ function _CalendarHeader<T>({
                   style={[
                     theme.typography.sm,
                     u['text-center'],
+                    { fontFamily: Platform.OS == 'ios' ? 'Didot' : 'monospace' },
                     //Platform.OS === 'web' && _isToday && u['mt-6'],
                   ]}
                 >
@@ -175,6 +179,7 @@ function _CalendarHeader<T>({
                   style={[
                     theme.typography.xs,
                     u['text-center'],
+                    { fontFamily: Platform.OS == 'ios' ? 'Didot' : 'monospace' },
                     //Platform.OS === 'web' && _isToday && u['mt-6'],
                   ]}
                 >
@@ -199,6 +204,7 @@ function _CalendarHeader<T>({
                       style={{
                         fontSize: 8,
                         color: theme.palette.primary.contrastText,
+                        fontFamily: Platform.OS == 'ios' ? 'Didot' : 'monospace',
                       }}
                     >
                       {event.title}

@@ -183,7 +183,7 @@ function _CalendarBody<T>({
             ))}
           </View>
           {dateRange.map((date) => (
-            <View style={[u['flex-1'], u['overflow-hidden']]} key={date.toString()}>
+            <View style={[u['flex-1']]} key={date.toString()}>
               {hours.map((hour) => (
                 <HourGuideCell
                   key={hour}
@@ -201,7 +201,19 @@ function _CalendarBody<T>({
                     { backgroundColor: theme.palette.nowIndicator },
                     { top: `${getRelativeTopInDay(now)}%` },
                   ]}
-                />
+                >
+                  <View
+                    style={{
+                      position: 'absolute',
+                      width: 8,
+                      height: 8,
+                      borderRadius: 8,
+                      backgroundColor: 'black',
+                      marginTop: -3,
+                      marginLeft: -3,
+                    }}
+                  />
+                </View>
               )}
             </View>
           ))}

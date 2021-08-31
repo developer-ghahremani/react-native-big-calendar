@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import * as React from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import { Platform, Text, TouchableOpacity } from 'react-native'
 
 import { CalendarTouchableOpacityProps, ICalendarEvent } from '../interfaces'
 import { useTheme } from '../theme/ThemeContext'
@@ -15,6 +15,7 @@ interface DefaultCalendarEventRendererProps<T> {
   ampm: boolean
   moveCallBack: any
   events: ICalendarEvent<T>[]
+  dateRange: dayjs.Dayjs[]
 }
 
 export function DefaultCalendarEventRenderer<T>({
@@ -25,10 +26,15 @@ export function DefaultCalendarEventRenderer<T>({
   // ampm,
   moveCallBack,
   events,
+  dateRange,
 }: DefaultCalendarEventRendererProps<T>) {
   const theme = useTheme()
   // const eventTimeStyle = { fontSize: theme.typography.xs.fontSize, color: textColor }
-  const eventTitleStyle = { fontSize: theme.typography.sm.fontSize, color: textColor }
+  const eventTitleStyle = {
+    fontSize: theme.typography.sm.fontSize,
+    color: textColor,
+    fontFamily: Platform.OS == 'ios' ? 'Didot' : 'monospace',
+  }
 
   return (
     <Draggable
@@ -36,6 +42,7 @@ export function DefaultCalendarEventRenderer<T>({
       moveCallBack={moveCallBack}
       event={event}
       events={events}
+      dateRange={dateRange}
     >
       <TouchableOpacity
         onPress={touchableOpacityProps.onPress}
