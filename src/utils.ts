@@ -119,8 +119,12 @@ export function formatStartEnd(start: Date, end: Date, format: string) {
 export function isAllDayEvent(start: Date, end: Date) {
   const _start = dayjs(start)
   const _end = dayjs(end)
-
-  return _start.hour() === 0 && _start.minute() === 0 && _end.hour() === 0 && _end.minute() === 0
+  var result = false
+  if (_start.hour() === 0 && _start.minute() === 0 && _end.hour() === 0 && _end.minute() === 0)
+    result = true
+  if (_start.hour() === 0 && _start.minute() === 0 && _end.hour() === 23 && _end.minute() === 56)
+    result = true
+  return result
 }
 
 export function getCountOfEventsAtEvent(
