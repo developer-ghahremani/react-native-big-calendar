@@ -51,7 +51,7 @@ export const Draggable = (props) => {
   ).current
 
   const day = props.touchableOpacityProps.key.substring(0, 2)
-  const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+  const days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
   const dayDif = days.indexOf(day)
   const marginLeftInPercent = dayDif * 14.28
   const minusLeft = dayDif * 7.14

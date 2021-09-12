@@ -122,7 +122,7 @@ export function isAllDayEvent(start: Date, end: Date) {
   var result = false
   if (_start.hour() === 0 && _start.minute() === 0 && _end.hour() === 0 && _end.minute() === 0)
     result = true
-  if (_start.hour() === 0 && _start.minute() === 0 && _end.hour() === 23 && _end.minute() === 56)
+  if (_start.hour() === 0 && _start.minute() === 0 && _end.hour() === 23 && _end.minute() === 59)
     result = true
   return result
 }

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import moment from 'jalali-moment'
 import * as React from 'react'
-import { Platform, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 
 import { eventCellCss, u } from '../commonStyles'
 import { ICalendarEvent } from '../interfaces'
@@ -17,7 +17,6 @@ export interface CalendarHeaderProps<T> {
   events: ICalendarEvent<T>[]
   onPressDateHeader?: (date: Date) => void
   onPressEvent?: (event: ICalendarEvent<T>) => void
-  font?: any
 }
 
 function _CalendarHeader<T>({
@@ -29,7 +28,6 @@ function _CalendarHeader<T>({
   DayNumberContainerStyle,
   events,
   onPressEvent = () => console.log('onPressEvent'),
-  font = 'latinFont',
 }: CalendarHeaderProps<T>) {
   const _onPress = React.useCallback(
     (date: Date) => {
@@ -128,7 +126,8 @@ function _CalendarHeader<T>({
                   u['mb-4'],
                   {
                     color: todayColor(date, true),
-                    fontFamily: font ? font : Platform.OS == 'ios' ? 'Didot' : 'monospace',
+                    fontFamily: 'segoeui',
+                    fontSize: 11,
                   },
                 ]}
               >
@@ -171,7 +170,7 @@ function _CalendarHeader<T>({
                   style={[
                     theme.typography.sm,
                     u['text-center'],
-                    { fontFamily: font ? font : Platform.OS == 'ios' ? 'Didot' : 'monospace' },
+                    { fontFamily: 'segoeui' },
                     //Platform.OS === 'web' && _isToday && u['mt-6'],
                   ]}
                 >
@@ -181,7 +180,7 @@ function _CalendarHeader<T>({
                   style={[
                     theme.typography.xs,
                     u['text-center'],
-                    { fontFamily: font ? font : Platform.OS == 'ios' ? 'Didot' : 'monospace' },
+                    { fontFamily: 'segoeui' },
                     //Platform.OS === 'web' && _isToday && u['mt-6'],
                   ]}
                 >
@@ -206,7 +205,7 @@ function _CalendarHeader<T>({
                       style={{
                         fontSize: 8,
                         color: theme.palette.primary.contrastText,
-                        fontFamily: font ? font : Platform.OS == 'ios' ? 'Didot' : 'monospace',
+                        fontFamily: 'segoeui',
                       }}
                     >
                       {event.title}
