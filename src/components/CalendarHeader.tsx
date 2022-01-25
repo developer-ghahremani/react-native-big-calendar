@@ -1,4 +1,6 @@
 import dayjs from 'dayjs'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+import weekYear from 'dayjs/plugin/weekYear'
 import moment from 'jalali-moment'
 import * as React from 'react'
 import { Text, TouchableOpacity, View, ViewStyle } from 'react-native'
@@ -35,6 +37,8 @@ function _CalendarHeader<T>({
     },
     [onPressDateHeader],
   )
+  dayjs.extend(weekOfYear)
+  dayjs.extend(weekYear)
 
   const theme = useTheme()
 
@@ -103,9 +107,7 @@ function _CalendarHeader<T>({
       <View style={[u['w-50'], u['items-center']]}>
         <Text style={[theme.typography.xs, u['mb-4']]}>Week</Text>
         <View style={[u['w-36'], u['h-36'], u['bordered'], u['justify-center'], u['items-center']]}>
-          <Text style={[theme.typography.xl]}>
-            {Math.ceil(parseInt(dayjs(dateRange[0]).format('DD')) / 7)}
-          </Text>
+          <Text style={[theme.typography.xl]}>{dayjs(dateRange[0]).week()}</Text>
         </View>
         <Text style={[theme.typography.xs, u['mt-6']]}>All day</Text>
       </View>
